@@ -36,4 +36,11 @@ set number
 set hlsearch
 nnoremap <CR> :noh<CR>
 
+" Get rid of auto comment on new line
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+" Hopefully turn on omni completion
+filetype plugin on
+set omnifunc=syntaxcomplete#Complete
+
 
