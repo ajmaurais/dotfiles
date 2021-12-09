@@ -6,8 +6,8 @@ call plug#begin('~/.config/nvim/autoload')
 Plug 'jalvesaq/Nvim-R'
 
 " status line
-Plug 'itchyny/lightline.vim'
-Plug 'itchyny/vim-gitbranch'
+" Plug 'itchyny/lightline.vim'
+" Plug 'itchyny/vim-gitbranch'
 
 " ncm autocompletion
 " Plug 'ncm2/ncm2'
@@ -36,6 +36,8 @@ Plug 'davidhalter/jedi-vim'   " jedi for python
 Plug 'kshenoy/vim-signature' " Better marks plugin
 
 Plug 'christoomey/vim-tmux-navigator' " Vim tmux nagivation
+
+Plug 'broadinstitute/vim-wdl' " syntax highlighting for WDL
 
 call plug#end()
 
