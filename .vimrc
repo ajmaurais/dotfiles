@@ -20,6 +20,9 @@ syntax on
 " set relative line numbers on
 set rnu
 
+set visualbell
+set t_vb=
+
 " map CTRL-E to end-of-line
 imap <C-e> <esc>$i<right>
 "nmap <C-e> <end>
