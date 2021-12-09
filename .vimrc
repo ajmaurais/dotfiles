@@ -46,4 +46,6 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 filetype plugin on
 set omnifunc=syntaxcomplete#Complete
 
+" dark background
+set background=dark
 
