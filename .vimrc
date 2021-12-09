@@ -20,6 +20,7 @@ syntax on
 " set relative line numbers on
 set rnu
 
+" Turn off stupid bells
 set visualbell
 set t_vb=
 
