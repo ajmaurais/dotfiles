@@ -122,9 +122,9 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 set autowriteall
 set autoread
 
-" set tabstop=4
+set tabstop=4
 " set shiftwidth=4
-" set expandtab
+ set expandtab
 " set number
 " filetype indent plugin on
 " set autoindent
