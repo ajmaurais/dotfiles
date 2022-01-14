@@ -17,10 +17,18 @@ Plug 'jalvesaq/Nvim-R'
 " Plug 'ncm2/ncm2-ultisnips'
 
 " csv plugin
-Plug 'chrisbra/csv.vim'
+" Plug 'chrisbra/csv.vim'
 
 " lint plugin
-Plug 'w0rp/ale'
+Plug 'neomake/neomake'
+
+" status line
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" color theme
+" Plug 'morhetz/gruvbox'
+Plug 'tanvirtin/monokai.nvim'
 
 " send lines to console
 Plug 'jalvesaq/vimcmdline'
@@ -54,17 +62,14 @@ let g:jedi#popup_on_dot = 0
 let g:jedi#completions_command = ""
 let g:jedi#show_call_signatures = "0"
 
+" when to activate neomake
+call neomake#configure#automake('nrw', 50)
 
-let g:lightline = {
-      \ 'colorscheme': 'PaperColor',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'gitbranch#name'
-      \ },
-      \ }
+" which linter to enable for Python source file linting
+let g:neomake_python_enabled_makers = ['pylint']
+
+colorscheme monokai
+set background=dark
 
 " enable ncm2 for all buffers
 " autocmd BufEnter * call ncm2#enable_for_buffer()
