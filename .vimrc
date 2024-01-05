@@ -20,6 +20,10 @@ syntax on
 " set relative line numbers on
 set rnu
 
+" Turn off stupid bells
+set visualbell
+set t_vb=
+
 " map CTRL-E to end-of-line
 imap <C-e> <esc>$i<right>
 "nmap <C-e> <end>
@@ -43,4 +47,6 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 filetype plugin on
 set omnifunc=syntaxcomplete#Complete
 
+" dark background
+set background=dark
 

@@ -6,8 +6,8 @@ call plug#begin('~/.config/nvim/autoload')
 Plug 'jalvesaq/Nvim-R'
 
 " status line
-Plug 'itchyny/lightline.vim'
-Plug 'itchyny/vim-gitbranch'
+" Plug 'itchyny/lightline.vim'
+" Plug 'itchyny/vim-gitbranch'
 
 " ncm autocompletion
 " Plug 'ncm2/ncm2'
@@ -17,10 +17,18 @@ Plug 'itchyny/vim-gitbranch'
 " Plug 'ncm2/ncm2-ultisnips'
 
 " csv plugin
-Plug 'chrisbra/csv.vim'
+" Plug 'chrisbra/csv.vim'
 
 " lint plugin
-Plug 'w0rp/ale'
+Plug 'neomake/neomake'
+
+" status line
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" color theme
+" Plug 'morhetz/gruvbox'
+Plug 'tanvirtin/monokai.nvim'
 
 " send lines to console
 Plug 'jalvesaq/vimcmdline'
@@ -39,7 +47,44 @@ Plug 'christoomey/vim-tmux-navigator' " Vim tmux nagivation
 
 Plug 'ilyachur/cmake4vim' " CMake integration
 
+Plug 'ajmaurais/vim-wdl' " syntax highlighting for WDL
+
+Plug 'LukeGoodsell/nextflow-vim' " syntax highlighting for nextflow
+
+" Things for quarto
+" Plug 'quarto-dev/quarto-nvim'
+" Plug 'neovim/nvim-lspconfig'
+" Plug 'jmbuhr/otter.nvim'
+" Plug 'hrsh7th/nvim-cmp'
+" Plug 'nvim-treesitter/nvim-treesitter'
+
+Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'quarto-dev/quarto-vim'
+
 call plug#end()
+
+" quarto config
+" local quarto = require'quarto'
+" require'quarto'.setup{
+"   debug = false,
+"   closePreviewOnExit = true,
+"   lspFeatures = {
+"     enabled = false,
+"     languages = { 'r', 'python', 'julia' },
+"     chunks = 'curly', -- 'curly' or 'all'
+"     diagnostics = {
+"       enabled = true,
+"       triggers = { "BufWrite" }
+"     },
+"     completion = {
+"       enabled = false,
+"     },
+"   },
+"   keymap = {
+"     hover = 'K',
+"     definition = 'gd'
+"   }
+" }
 
 " Plugin settings
 set noshowmode
@@ -54,17 +99,14 @@ let g:jedi#popup_on_dot = 0
 let g:jedi#completions_command = ""
 let g:jedi#show_call_signatures = "0"
 
+" when to activate neomake
+call neomake#configure#automake('nrw', 50)
 
-let g:lightline = {
-      \ 'colorscheme': 'PaperColor',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'gitbranch#name'
-      \ },
-      \ }
+" which linter to enable for Python source file linting
+let g:neomake_python_enabled_makers = ['pylint']
+
+colorscheme monokai
+set background=dark
 
 " enable ncm2 for all buffers
 " autocmd BufEnter * call ncm2#enable_for_buffer()
@@ -76,7 +118,7 @@ set notimeout nottimeout
 " set completeopt=noinsert,menuone,noselect
 
 " Get rid of stupid Nvim-R remapping
-let R_assign = 2
+let R_assign = 0
 
 " Set R wd to vim wd
 let R_nvim_wd = 1
@@ -123,15 +165,15 @@ imap <C-a> <esc>^i
 " inoremap ^[f <esc>ea
 
 " Get rid of auto comment on new line
-autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+" autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " Auto write
 set autowriteall
 set autoread
 
-" set tabstop=4
+set tabstop=4
 " set shiftwidth=4
-" set expandtab
+ set expandtab
 " set number
 " filetype indent plugin on
 " set autoindent
@@ -141,9 +183,13 @@ set autoread
 au BufRead,BufNewFile *.py set expandtab
 au BufRead,BufNewFile *.c set noexpandtab
 au BufRead,BufNewFile *.h set noexpandtab
+au BufRead,BufNewFile *.wdl set expandtab
 au BufRead,BufNewFile Makefile* set noexpandtab
 
 au FileType python setlocal formatprg=autopep8\ -
+
+" set syntax for file extensions
+autocmd BufEnter *.bats :setlocal filetype=sh
 
 set expandtab           " enter spaces when tab is pressed
 set tabstop=4           " use 4 spaces to represent tab
@@ -153,6 +199,8 @@ set autoindent          " copy indent from current line when starting a new line
 set smartindent
 set smarttab
 set tags=tags
+
+set mouse=
 
 " make backspaces more powerfull
 set backspace=indent,eol,start
