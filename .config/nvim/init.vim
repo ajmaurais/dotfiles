@@ -45,9 +45,44 @@ Plug 'kshenoy/vim-signature' " Better marks plugin
 
 Plug 'christoomey/vim-tmux-navigator' " Vim tmux nagivation
 
-Plug 'broadinstitute/vim-wdl' " syntax highlighting for WDL
+Plug 'ajmaurais/vim-wdl' " syntax highlighting for WDL
+
+Plug 'LukeGoodsell/nextflow-vim' " syntax highlighting for nextflow
+
+" Things for quarto
+" Plug 'quarto-dev/quarto-nvim'
+" Plug 'neovim/nvim-lspconfig'
+" Plug 'jmbuhr/otter.nvim'
+" Plug 'hrsh7th/nvim-cmp'
+" Plug 'nvim-treesitter/nvim-treesitter'
+
+Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'quarto-dev/quarto-vim'
 
 call plug#end()
+
+" quarto config
+" local quarto = require'quarto'
+" require'quarto'.setup{
+"   debug = false,
+"   closePreviewOnExit = true,
+"   lspFeatures = {
+"     enabled = false,
+"     languages = { 'r', 'python', 'julia' },
+"     chunks = 'curly', -- 'curly' or 'all'
+"     diagnostics = {
+"       enabled = true,
+"       triggers = { "BufWrite" }
+"     },
+"     completion = {
+"       enabled = false,
+"     },
+"   },
+"   keymap = {
+"     hover = 'K',
+"     definition = 'gd'
+"   }
+" }
 
 " Plugin settings
 set noshowmode
@@ -81,10 +116,13 @@ set notimeout nottimeout
 " set completeopt=noinsert,menuone,noselect
 
 " Get rid of stupid Nvim-R remapping
-let R_assign = 2
+let R_assign = 0
 
 " Set R wd to vim wd
 let R_nvim_wd = 1
+
+" View R data frame in excell
+let R_df_viewer = "ssview <- function(data){ temp_file <- paste0(tempfile(), '.csv'); write.table(data, file=temp_file, row.name=F, sep=','); system(paste0('wslview $(wslpath -w ', temp_file, ')')) }; ssview(%s)"
 
 if has('persistent_undo')      "check if your vim version supports it
   set undofile                 "turn on the feature  
@@ -121,7 +159,7 @@ imap <C-a> <esc>^i
 " inoremap ^[f <esc>ea
 
 " Get rid of auto comment on new line
-autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+" autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " Auto write
 set autowriteall
@@ -139,9 +177,13 @@ set tabstop=4
 au BufRead,BufNewFile *.py set expandtab
 au BufRead,BufNewFile *.c set noexpandtab
 au BufRead,BufNewFile *.h set noexpandtab
+au BufRead,BufNewFile *.wdl set expandtab
 au BufRead,BufNewFile Makefile* set noexpandtab
 
 au FileType python setlocal formatprg=autopep8\ -
+
+" set syntax for file extensions
+autocmd BufEnter *.bats :setlocal filetype=sh
 
 set expandtab           " enter spaces when tab is pressed
 set tabstop=4           " use 4 spaces to represent tab
@@ -150,6 +192,8 @@ set shiftwidth=4        " number of spaces to use for auto indent
 set autoindent          " copy indent from current line when starting a new line
 set smartindent
 set smarttab
+
+set mouse=
 
 " make backspaces more powerfull
 set backspace=indent,eol,start
