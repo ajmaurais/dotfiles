@@ -37,6 +37,8 @@ Plug 'kshenoy/vim-signature' " Better marks plugin
 
 Plug 'christoomey/vim-tmux-navigator' " Vim tmux nagivation
 
+Plug 'ilyachur/cmake4vim' " CMake integration
+
 call plug#end()
 
 " Plugin settings
@@ -78,6 +80,13 @@ let R_assign = 2
 
 " Set R wd to vim wd
 let R_nvim_wd = 1
+
+" Make R session run in tmux pane instead of R window
+" let R_external_term = 1
+" let R_notmuxconf = 1
+let R_df_viewer = "ssview <- function(data) { temp_file <- paste0(tempfile(), '.tsv'); write.table(data, file=temp_file, row.name=F, sep='\\t'); system(paste('open', temp_file))}; ssview(%s)"
+" let R_nvimpager = 'no'
+" let R_open_example = 0
 
 if has('persistent_undo')      "check if your vim version supports it
   set undofile                 "turn on the feature  
@@ -143,6 +152,7 @@ set shiftwidth=4        " number of spaces to use for auto indent
 set autoindent          " copy indent from current line when starting a new line
 set smartindent
 set smarttab
+set tags=tags
 
 " make backspaces more powerfull
 set backspace=indent,eol,start
@@ -166,6 +176,9 @@ nnoremap <silent> <C-w>j :TmuxNavigateDown<cr>
 nnoremap <silent> <C-w>k :TmuxNavigateUp<cr>
 nnoremap <silent> <C-w>l :TmuxNavigateRight<cr>
 nnoremap <silent> <C-w>\ :TmuxNavigatePrevious<cr>
+
+" load code folding on open and close
+
 
 "
 "function! SplitPaste(...)
