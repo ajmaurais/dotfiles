@@ -6,8 +6,8 @@ call plug#begin('~/.config/nvim/autoload')
 Plug 'jalvesaq/Nvim-R'
 
 " status line
-" Plug 'itchyny/lightline.vim'
-" Plug 'itchyny/vim-gitbranch'
+Plug 'itchyny/lightline.vim'
+Plug 'itchyny/vim-gitbranch'
 
 " ncm autocompletion
 " Plug 'ncm2/ncm2'
@@ -23,8 +23,8 @@ Plug 'jalvesaq/Nvim-R'
 Plug 'neomake/neomake'
 
 " status line
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
 
 " color theme
 " Plug 'morhetz/gruvbox'
@@ -40,6 +40,8 @@ Plug 'jalvesaq/vimcmdline'
 " Plug 'ncm2/ncm2-path'  " filepath completion
 
 Plug 'davidhalter/jedi-vim'   " jedi for python
+
+Plug 'vim-python/python-syntax' " Better python syntax highlighting
 
 Plug 'kshenoy/vim-signature' " Better marks plugin
 
@@ -58,6 +60,7 @@ Plug 'LukeGoodsell/nextflow-vim' " syntax highlighting for nextflow
 
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'quarto-dev/quarto-vim'
+Plug 'cespare/vim-toml'
 
 call plug#end()
 
@@ -97,11 +100,21 @@ let g:jedi#popup_on_dot = 0
 let g:jedi#completions_command = ""
 let g:jedi#show_call_signatures = "0"
 
+let g:jedi#goto_command = "<Leader>jd"
+let g:jedi#goto_assignments_command = "<Leader>jg"
+let g:jedi#usages_command = "<Leader>jn"
+let g:jedi#rename_command = "<Leader>jr"
+let g:jedi#goto_stubs_command = "<Leader>js"
+let g:jedi#documentation_command = "<Leader>jK"
+
 " when to activate neomake
 call neomake#configure#automake('nrw', 50)
 
 " which linter to enable for Python source file linting
 let g:neomake_python_enabled_makers = ['pylint']
+
+" Better python syntax highlighting
+let g:python_highlight_all = 1
 
 colorscheme monokai
 set background=dark
@@ -121,6 +134,16 @@ let R_assign = 0
 " Set R wd to vim wd
 let R_nvim_wd = 1
 
+let g:lightline = {
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'gitbranch#name'
+      \ },
+      \ }
+
 " View R data frame in excell
 let R_df_viewer = "ssview <- function(data){ temp_file <- paste0(tempfile(), '.csv'); write.table(data, file=temp_file, row.name=F, sep=','); system(paste0('wslview $(wslpath -w ', temp_file, ')')) }; ssview(%s)"
 
@@ -138,6 +161,35 @@ set number
 set rnu
 
 set autoread "auto load file changes
+
+let cmdline_map_start = 'g'
+let cmdline_app = {}
+let cmdline_app['python'] = '/usr/bin/env ipython'
+let cmdline_app['py'] = '/usr/bin/env ipython'
+
+let cmdline_color_input = '#b35757'
+
+" vimcmdline mappings
+let cmdline_map_start          = '<Leader>cf'
+let cmdline_map_send           = '<Leader>d'
+let cmdline_map_send_and_stay  = '<Leader>l'
+let cmdline_map_source_fun     = '<Leader>f'
+let cmdline_map_send_paragraph = '<Leader>p'
+let cmdline_map_send_block     = '<Leader>b'
+let cmdline_map_send_motion    = '<Leader>m'
+let cmdline_map_quit           = '<Leader>q'
+
+" let cmdline_actions = {}
+" let cmdline_actions['python'] = {}
+" let cmdline_actions['python']['<Leader>rp'] = 'print(%s)'
+" \ 'python': {'<Leader>rp': 'print(s)'}
+" \ }
+" let cmdline_actions['python']['<Leader>rr'] = 'clear'
+"         {'<LocalLeader>rp', 'print(%s)'},
+"         {'<LocalLeader>pt', 'type(%s)'},
+"         {'<LocalLeader>pd', 'dir(%s)'},
+"     }
+" }
 
 function! <SID>StripTrailingWhitespaces()
     let l = line(".")
@@ -167,7 +219,7 @@ set autoread
 
 set tabstop=4
 " set shiftwidth=4
- set expandtab
+set expandtab
 " set number
 " filetype indent plugin on
 " set autoindent
